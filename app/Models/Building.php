@@ -1,9 +1,9 @@
 <?php
 
-
 namespace App\Models;
 
-
+use App\Events\BuildingCapacityDecreasedEvent;
+use App\Events\BuildingCapacityIncreasedEvent;
 use App\Events\BuildingCreatedEvent;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -20,6 +20,16 @@ class Building extends Model
 
         return static::getByUuid($attributes['uuid']);
 
+    }
+
+    public function increaseCapacity(int $increase)
+    {
+        event(new BuildingCapacityIncreasedEvent($this->uuid, $increase));
+    }
+
+    public function decreaseCapacity(int $decrease)
+    {
+        event(new BuildingCapacityDecreasedEvent($this->uuid, $decrease));
     }
 
     public static function getByUuid(string $uuid): Building
