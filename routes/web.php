@@ -12,5 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $building = \App\Models\Building::first();
+    $building->changeName('New Building Name');
+
+    dd($building);
 });
