@@ -15,7 +15,7 @@ class CreateTables extends Migration
     {
         Schema::create('buildings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('uuid');
+            $table->string('uuid')->unique();
             $table->string('name');
             $table->integer('capacity')->default(0);
             $table->timestamps();

@@ -14,7 +14,6 @@ class BuildingCapacityIncreasedEvent implements ShouldBeStored
 
     public function __construct(string $buildingUuid, int $capacityIncrease) {
         $this->buildingUuid = $buildingUuid;
-
         $this->capacityIncrease = $capacityIncrease;
     }
 }

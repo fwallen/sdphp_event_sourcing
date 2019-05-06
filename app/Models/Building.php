@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\BuildingCapacityDecreasedEvent;
 use App\Events\BuildingCapacityIncreasedEvent;
 use App\Events\BuildingCreatedEvent;
+use App\Events\BuildingNameChangedEvent;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -30,6 +31,11 @@ class Building extends Model
     public function decreaseCapacity(int $decrease)
     {
         event(new BuildingCapacityDecreasedEvent($this->uuid, $decrease));
+    }
+
+    public function changeName(string $newName)
+    {
+        event(new BuildingNameChangedEvent($this->uuid, $newName));
     }
 
     public static function getByUuid(string $uuid): Building

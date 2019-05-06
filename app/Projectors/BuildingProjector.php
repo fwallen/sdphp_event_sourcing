@@ -5,6 +5,7 @@ namespace App\Projectors;
 use App\Events\BuildingCapacityDecreasedEvent;
 use App\Events\BuildingCapacityIncreasedEvent;
 use App\Events\BuildingCreatedEvent;
+use App\Events\BuildingNameChangedEvent;
 use App\Models\Building;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
@@ -29,6 +30,13 @@ final class BuildingProjector implements Projector
     {
         $building = Building::getByUuid($event->buildingUuid);
         $building->capacity -= $event->capacityDecrease;
+        $building->save();
+    }
+
+    public function onNameChanged(BuildingNameChangedEvent $event)
+    {
+        $building = Building::getByUuid($event->buildingUuid);
+        $building->name = $event->newName;
         $building->save();
     }
 }
